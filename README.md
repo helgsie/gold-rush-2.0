@@ -1,3 +1,5 @@
+HæHæ breyting breyting
+
 # Version 1.0
 
 Verkefnið er endurbætt útgáfa af GoldRush. Sá leikur var uppáhalds verkefnið hjá öllum þar sem hann gefur marga 

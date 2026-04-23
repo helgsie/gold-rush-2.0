@@ -4,11 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>vidmot</groupId>
+    <groupId>is.hi.hbv202g.finalass</groupId>
     <artifactId>GoldRush</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <name>GoldRush</name>
+    <description>GoldRush JavaFX game project for HBV202G</description>
+    <url>https://github.com/helgsie/gold-rush-2.0</url>
     <licenses>
         <license>
             <name>MIT</name>
@@ -16,13 +18,15 @@
     </licenses>
     <organization>
         <name>University of Iceland</name>
-        <url>https://www.hi.is</url>
+        <url>hi.is</url>
     </organization>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>21</java.version>
+        <javafx.version>21</javafx.version>
         <junit.version>5.10.0</junit.version>
-        <java.version>17</java.version>
+        <main.class>vidmot.goldrush/vidmot.goldrush.GoldApplication</main.class>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.release>${java.version}</maven.compiler.release>
@@ -30,20 +34,14 @@
 
     <dependencies>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13.2</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>21</version>
+            <version>${javafx.version}</version>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>21</version>
+            <version>${javafx.version}</version>
         </dependency>
 
         <dependency>
@@ -66,11 +64,14 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.11.0</version>
-                <configuration>
-                    <source>21</source>
-                    <target>21</target>
-                </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
+            </plugin>
+
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
@@ -91,7 +92,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- Plugins from the other POM -->
+
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>

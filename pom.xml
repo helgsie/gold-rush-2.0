@@ -26,7 +26,7 @@
         <java.version>21</java.version>
         <javafx.version>21</javafx.version>
         <junit.version>5.10.0</junit.version>
-        <main.class>vidmot.goldrush/vidmot.goldrush.GoldApplication</main.class>
+        q<main.class>vidmot.goldrush/vidmot.goldrush.GoldApplication</main.class>
 
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
@@ -88,7 +88,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>vidmot.goldrush/vidmot.goldrush.GoldApplication</mainClass>
+                            <mainClass>goldrush/goldrush.GoldApplication</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>

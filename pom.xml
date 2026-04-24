@@ -4,11 +4,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>is.hi.hbv202g.finalass</groupId>
+    <groupId>is.hi.hbv202g.finalAssignment</groupId>
     <artifactId>GoldRush</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <name>GoldRush</name>
+    <name>GoldRush 2.0</name>
     <description>GoldRush JavaFX game project for HBV202G</description>
     <url>https://github.com/helgsie/gold-rush-2.0</url>
     <licenses>
@@ -26,7 +26,8 @@
         <java.version>21</java.version>
         <javafx.version>21</javafx.version>
         <junit.version>5.10.0</junit.version>
-        <main.class>goldrush/goldrush.GoldApplication</main.class>
+        q<main.class>vidmot.goldrush/vidmot.goldrush.GoldApplication</main.class>
+
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.compiler.release>${java.version}</maven.compiler.release>
@@ -63,13 +64,19 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version>
+                <version>3.13.0</version>
             </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.2.5</version>
+                <version>3.3.0</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.12.1</version>
             </plugin>
 
             <plugin>
@@ -96,9 +103,9 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
-                <version>3.2.0</version>
+                <version>3.3.0</version>
                 <configuration>
-                    <mainClass>goldrush/goldrush.GoldApplication</mainClass>
+                    <mainClass>vidmot.goldrush.Launcher</mainClass>
                 </configuration>
             </plugin>
         </plugins>

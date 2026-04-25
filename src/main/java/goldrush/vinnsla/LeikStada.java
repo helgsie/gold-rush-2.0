@@ -1,7 +1,10 @@
 package goldrush.vinnsla;
 
-public class LeikStada {
-    public static void main(String[] args) {
-
-    }
+/**
+ * Mogulegar stodur leiksins.
+ */
+public enum LeikStada {
+    EKKI_BYRJADUR,
+    I_GANGI,
+    LOKID
 }

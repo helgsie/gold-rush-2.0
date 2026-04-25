@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ViewSwitcher {
 
@@ -15,6 +17,7 @@ public class ViewSwitcher {
     private static Scene scene;
     private static View lastView;
     private static View currentView;
+    private static final Logger LOGGER = Logger.getLogger(ViewSwitcher.class.getName());
 
     public static void setScene(Scene scene){
         ViewSwitcher.scene = scene;
@@ -45,8 +48,8 @@ public class ViewSwitcher {
             lastView = currentView;
             currentView = view;
             scene.setRoot(root);
-        }catch (IOException e){
-            e.printStackTrace();
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Failed to switch to view: " + view, e);
         }
     }
 

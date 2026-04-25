@@ -1,60 +1,44 @@
 package goldrush.vinnsla;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.application.Platform;
-import javafx.scene.control.Label;
-import javafx.util.Duration;
-import goldrush.vidmot.controller.GoldController;
-
+/**
+ * Heldur utan um timastodu leiksins.
+ */
 public class Klukka {
-    private int initialTimeInSeconds = 0;
-    private Timeline countUpTimeline;
+    private int currentTimeInSeconds;
+    private boolean running;
 
-    private final GoldController goldController;
-    private final Label fxTimi;
-
-    public Klukka(GoldController goldController, Label fxTimi) {
-        this.goldController = goldController;
-        this.fxTimi = fxTimi;
-    }
-
+    /**
+     * Byrjar timatalningu fra 0 sekundum.
+     */
     public void startCountUp() {
-        initialTimeInSeconds = 0;
-        updateCountLabel(initialTimeInSeconds);
-        if (countUpTimeline != null) {
-            countUpTimeline.stop();
-            countUpTimeline.getKeyFrames().clear();
+        currentTimeInSeconds = 0;
+        running = true;
+    }
+
+    /**
+     * Haekkar timann um eina sekundu ef klukkan er i gangi.
+     */
+    public void tick() {
+        if (running) {
+            currentTimeInSeconds++;
         }
-        countUpTimeline = new Timeline();
-        countUpTimeline.setCycleCount(Timeline.INDEFINITE);
-        KeyFrame keyFrame = new KeyFrame(Duration.seconds(1), event -> updateCountUp());
-        countUpTimeline.getKeyFrames().add(keyFrame);
-        countUpTimeline.play();
     }
 
-    private void updateCountUp() {
-        initialTimeInSeconds++;
-        updateCountLabel(initialTimeInSeconds);
-    }
-
-    private void updateCountLabel(int timeInSeconds) {
-        int minutes = timeInSeconds / 60;
-        int seconds = timeInSeconds % 60;
-        Platform.runLater(() -> fxTimi.setText(String.format("%02d:%02d", minutes, seconds)));
-    }
-
+    /**
+     * Stoppar timatalningu.
+     */
     public void stopCountUp() {
-        if (countUpTimeline != null) {
-            countUpTimeline.stop();
-        }
+        running = false;
     }
 
-    public int getCurrentTimeInSeconds() {
-        return initialTimeInSeconds;
-    }
-
-    public void setCurrentTimeInSeconds(int currentTimeInSeconds) {
-        this.initialTimeInSeconds = currentTimeInSeconds;
+    /**
+     * Skilar tima a forminu mm:ss.
+     *
+     * @return timi a strengjaformi
+     */
+    public String getFormattedTime() {
+        int minutes = currentTimeInSeconds / 60;
+        int seconds = currentTimeInSeconds % 60;
+        return String.format("%02d:%02d", minutes, seconds);
     }
 }

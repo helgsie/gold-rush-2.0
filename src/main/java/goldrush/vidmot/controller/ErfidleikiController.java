@@ -1,43 +1,35 @@
 package goldrush.vidmot.controller;
 
-import goldrush.vidmot.view.Leikbord;
 import goldrush.app.View;
 import goldrush.app.ViewSwitcher;
-import javafx.fxml.FXML;
+import goldrush.vinnsla.Erfidleikastig;
+import goldrush.vinnsla.Leikur;
 
 public class ErfidleikiController {
 
-    private int fjoldiOvina;
-    @FXML
-    private final Leikbord leikbord;
-    private static final ErfidleikiController instance = new ErfidleikiController();
+    private Leikur leikur;
 
     /**
      * Smiður til að setja upp leikborð
      */
     public ErfidleikiController() {
-        this.leikbord = new Leikbord();
     }
 
     /**
-     * sækir tilfelli af ErfidleikiController
-     * @return - tilfelli af ErfidleikiController
+     * Setur leik til ad deila milli controllera.
+     * @param leikur leikur
      */
-    public static ErfidleikiController getInstance() {
-        return instance;
+    public void setLeikur(Leikur leikur) {
+        this.leikur = leikur;
+        if (this.leikur != null) {
+            this.leikur.setErfidleikastig(Erfidleikastig.AUDVELT);
+        }
     }
 
-    public void setFjoldiOvina (int fjoldiOvina) {
-        this.fjoldiOvina = fjoldiOvina;
-    }
-
-    /**
-     * Stillir fjölda óvina í borðinu
-     *
-     * @return - skilar fjölda óvina
-     */
-    public int getFjoldiOvina() {
-        return fjoldiOvina;
+    public void setErfidleikastig(Erfidleikastig erfidleikastig) {
+        if (leikur != null) {
+            leikur.setErfidleikastig(erfidleikastig);
+        }
     }
 
     /**
@@ -51,27 +43,30 @@ public class ErfidleikiController {
      * Ef notandinn velur "auðvelt" erfiðleikastig þá er óvinafjöldinn einn
      */
     public void onAudvelt() {
+        setErfidleikastig(Erfidleikastig.AUDVELT);
         ViewSwitcher.switchTo(View.KARAKTER);
-        setFjoldiOvina(1);
-        leikbord.setFjoldiOvina(1);
+        KarakterController karakterController = (KarakterController) ViewSwitcher.lookup(View.KARAKTER);
+        karakterController.setLeikur(leikur);
     }
 
     /**
      * Ef notandinn velur "miðlungs" erfiðleikastig þá er óvinafjöldinn tveir
      */
     public void onMidlungs() {
+        setErfidleikastig(Erfidleikastig.MIDLUNGS);
         ViewSwitcher.switchTo(View.KARAKTER);
-        setFjoldiOvina(2);
-        leikbord.setFjoldiOvina(2);
+        KarakterController karakterController = (KarakterController) ViewSwitcher.lookup(View.KARAKTER);
+        karakterController.setLeikur(leikur);
     }
 
     /**
      * Ef notandinn velur "erfitt" erfiðleikastig þá er óvinafjöldinn þrír
      */
     public void onErfitt() {
+        setErfidleikastig(Erfidleikastig.ERFITT);
         ViewSwitcher.switchTo(View.KARAKTER);
-        setFjoldiOvina(3);
-        leikbord.setFjoldiOvina(3);
+        KarakterController karakterController = (KarakterController) ViewSwitcher.lookup(View.KARAKTER);
+        karakterController.setLeikur(leikur);
     }
 
 }

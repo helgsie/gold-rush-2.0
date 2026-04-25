@@ -6,6 +6,8 @@ import goldrush.vidmot.dialog.AdvorunDialog;
 import goldrush.vidmot.view.Leikbord;
 import goldrush.vinnsla.Klukka;
 import goldrush.vinnsla.Leikur;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.ButtonType;
@@ -13,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -25,11 +28,11 @@ public class GoldController {
     private Label fxTimi;
     @FXML
     private Label fxStig;
-    private int haestaStig = 0;
     @FXML
     private Leikbord leikbord;
-    private final Leikur leikur;
+    private Leikur leikur;
     private Klukka klukka;
+    private Timeline countUpTimeline;
 
     /**
      * Smiður til að setja upp leikborð
@@ -40,6 +43,16 @@ public class GoldController {
     }
 
     /**
+     * Setur leik til ad deila sameiginlegri leikstodu milli hluta forritsins.
+     *
+     * @param leikur leikur
+     */
+    public void setLeikur(Leikur leikur) {
+        this.leikur = leikur;
+        leikbord.setLeikur(leikur);
+    }
+
+    /**
      * Upphafsstilling til að tengja saman leikbord og menustyring
      * við GoldController
      */
@@ -47,34 +60,45 @@ public class GoldController {
     public void initialize() {
         menustyringController.setGoldController(this);
         leikbord.setGoldController(this);
-        klukka = new Klukka(this, fxTimi);
+        leikbord.setLeikur(leikur);
+        klukka = new Klukka();
     }
 
     /**
-     * Aðferð til að upphafsstilla tímann i leikborði
+     * Adferd til ad upphafsstilla timann i leikbordi.
      */
     public void startCountUp() {
         klukka.startCountUp();
+        fxTimi.setText(klukka.getFormattedTime());
+
+        if (countUpTimeline != null) {
+            countUpTimeline.stop();
+            countUpTimeline.getKeyFrames().clear();
+        }
+
+        countUpTimeline = new Timeline();
+        countUpTimeline.setCycleCount(Timeline.INDEFINITE);
+        KeyFrame keyFrame = new KeyFrame(Duration.seconds(1), event -> {
+            klukka.tick();
+            fxTimi.setText(klukka.getFormattedTime());
+        });
+        countUpTimeline.getKeyFrames().add(keyFrame);
+        countUpTimeline.play();
     }
 
     /**
-     * Uppfærir stig i leikborði
-     * @param points - stig
+     * Uppfaerir stig i leikbordi.
+     *
+     * @param points stig sem a ad baeta vid. Ef gildid er 0 eru nuverandi stig endurstillt.
      */
     public void updatePoints(int points) {
-        if (points != 0) {
-            String currentPointsText = fxStig.getText();
-            int currentPoints = Integer.parseInt(currentPointsText);
-            int newPoints = currentPoints + points;
-
-            if (newPoints > haestaStig) {
-                haestaStig = newPoints;
-            }
-
-            fxStig.setText(String.valueOf(newPoints));
+        if (points == 0) {
+            leikur.endurstillaStig();
         } else {
-            fxStig.setText("0");
+            leikur.baetaVidStigum(points);
         }
+
+        fxStig.setText(String.valueOf(leikur.getStigin()));
     }
 
     /**
@@ -83,21 +107,22 @@ public class GoldController {
      * @param varstDrepinn - hvort leikmaður deyr í leikborði
      */
     public void leikLokid(String varstDrepinn) {
-        leikur.leikLokid();
         klukka.stopCountUp();
+        if (countUpTimeline != null) {
+            countUpTimeline.stop();
+        }
         synaAlert(varstDrepinn);
     }
 
     /**
      * Alert gluggi kemur upp með skilaboð um að leiknum sé lokið, stigafjölda
      * og tíma
-     * @param s
+     * @param skilabod astaeda af hverju leik var tapad
      */
-    private void synaAlert(String s) {
-        int currentTime = klukka.getCurrentTimeInSeconds();
+    private void synaAlert(String skilabod) {
         Platform.runLater(() ->{
-            AdvorunDialog alert = new AdvorunDialog("Leik lokið", s, "Stigin þín: " + fxStig.getText() + " | Hæsti stigafjöldi: " + haestaStig +
-                    "\nTiminn þinn: " + formatTime(currentTime));
+            AdvorunDialog alert = new AdvorunDialog("Leik lokið", skilabod, "Stigin þín: " + leikur.getStigin() + " | Hæsti stigafjöldi: " + leikur.getHaestuStig() +
+                    "\nTiminn þinn: " + klukka.getFormattedTime());
 
             Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
             stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/goldrush/myndir/Icon.jpg"))));
@@ -106,8 +131,8 @@ public class GoldController {
 
             if (result.isPresent() && result.get() == AdvorunDialog.BTYPE) {
                 hreinsaBord();
-                leikbord.hefjaAfram();
                 updatePoints(0);
+                leikbord.hefjaAfram();
             } else {
                 hreinsaBord();
                 updatePoints(0);
@@ -129,16 +154,5 @@ public class GoldController {
      */
     public void hreinsaBord() {
         leikbord.hreinsaBord();
-    }
-
-    /**
-     * Stillir tímann á rétt snið
-     * @param timeInSeconds - tími í sekúndum
-     * @return tíminn á réttu sniði
-     */
-    private String formatTime(int timeInSeconds) {
-        int minutes = timeInSeconds / 60;
-        int seconds = timeInSeconds % 60;
-        return String.format("%02d:%02d", minutes, seconds);
     }
 }

@@ -1,43 +1,86 @@
 package goldrush.vinnsla;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-
 /**
- * Heldur utan um stigin fyrir hverjan leik sem notandinn byrjar á
+ * Heldur utan um stodu leiksins.
  */
 public class Leikur {
-    private final IntegerProperty stigin = new SimpleIntegerProperty();
+    private final Stigakerfi stigakerfi;
+    private String selectedCharacter;
+    private Erfidleikastig erfidleikastig;
 
-    public IntegerProperty stiginProperty(){
-        return stigin;
+    /**
+     * Smiður sem byrjar leik i upphafsstodu.
+     */
+    public Leikur() {
+        this.stigakerfi = new Stigakerfi();
+        this.selectedCharacter = "Mario";
+        this.erfidleikastig = Erfidleikastig.AUDVELT;
     }
 
     /**
-     * Nær í stigafjöldann
-     * @return stigafjöldann
+     * Stillir valinn karakter fyrir leikinn.
+     *
+     * @param selectedCharacter nafn a völdum karakter
      */
-    public int getStigin(){
-        return stigin.get();
+    public void setSelectedCharacter(String selectedCharacter) {
+        this.selectedCharacter = selectedCharacter;
     }
 
     /**
-     * Hækkar stigin um 1
+     * Skilar völdum karakter.
+     *
+     * @return valinn karakter
      */
-    public void haekkaStigin(){
-        stigin.setValue(stigin.getValue()+1);
-    }
-    /**
-     * Breytir stigafjöldann í 0 þegar að leikurinn byrjar
-     */
-    public void nyrLeikur(){
-        stigin.setValue(0);
+    public String getSelectedCharacter() {
+        return selectedCharacter;
     }
 
     /**
-     * Breytir stigafjöldann í 0 þegar að leikurinn endar
+     * Stillir erfidleikastig leiksins.
+     *
+     * @param erfidleikastig erfidleikastig leiksins
      */
-    public void leikLokid(){
-        stigin.setValue(0);
+    public void setErfidleikastig(Erfidleikastig erfidleikastig) {
+        this.erfidleikastig = erfidleikastig;
+    }
+
+    /**
+     * Skilar erfidleikastigi leiksins.
+     *
+     * @return erfidleikastig leiksins
+     */
+    public Erfidleikastig getErfidleikastig() {
+        return erfidleikastig;
+    }
+
+    /**
+     * Baetir stigum vid nuverandi stigafjolda.
+     *
+     * @param stig stig sem a ad baeta vid
+     */
+    public void baetaVidStigum(int stig) {
+        stigakerfi.addPoints(stig);
+    }
+
+    /**
+     * Naer i nuverandi stigafjolda.
+     *
+     * @return nuverandi stigafjoldi
+     */
+    public int getStigin() {
+        return stigakerfi.getCurrentScore();
+    }
+
+    /**
+     * Naer i haesta stigafjolda.
+     *
+     * @return haestu stig
+     */
+    public int getHaestuStig() {
+        return stigakerfi.getHighScore();
+    }
+
+    public void endurstillaStig() {
+        stigakerfi.resetCurrentScore();
     }
 }

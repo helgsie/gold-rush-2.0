@@ -1,6 +1,7 @@
 package goldrush.vidmot.view;
 
-import goldrush.vidmot.controller.ErfidleikiController;
+import goldrush.vinnsla.Erfidleikastig;
+import goldrush.vinnsla.Leikur;
 import goldrush.vidmot.controller.GoldController;
 import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
@@ -25,7 +26,8 @@ public class Leikbord extends Pane {
 
     @FXML
     private GoldController goldController;
-    private ErfidleikiController erfidleikiController;
+    private Erfidleikastig erfidleikastig = Erfidleikastig.AUDVELT;
+    private Leikur leikur;
     private Grafari grafari;
     private long lastUpdateTime = 0;
     private static final long UPDATE_INTERVAL = 16_666_666;
@@ -33,7 +35,8 @@ public class Leikbord extends Pane {
     private boolean isMovingDown = false;
     private boolean isMovingLeft = false;
     private boolean isMovingRight = false;
-    private AnimationTimer gameLoop;
+    private AnimationTimer gullLoop;
+    private AnimationTimer ovinurLoop;
     private Timeline ovinurDropper;
     @FXML
     public MenuBar menustyring;
@@ -46,8 +49,34 @@ public class Leikbord extends Pane {
         this.goldController = goldController;
     }
 
-    public void setErfidleikiController() {
-        this.erfidleikiController = ErfidleikiController.getInstance();
+    /**
+     * Setur leik til ad nota sameiginlega leikstodu.
+     *
+     * @param leikur leikur
+     */
+    public void setLeikur(Leikur leikur) {
+        this.leikur = leikur;
+        if (leikur != null) {
+            setErfidleikastig(leikur.getErfidleikastig());
+        }
+    }
+
+    /**
+     * Setur inn erfidleikastig leiksins.
+     *
+     * @param erfidleikastig erfidleikastig leiksins
+     */
+    public void setErfidleikastig(Erfidleikastig erfidleikastig) {
+        this.erfidleikastig = erfidleikastig;
+    }
+
+    /**
+     * Skilar fjolda ovina.
+     *
+     * @return fjoldi ovina
+     */
+    public int getFjoldiOvina() {
+        return erfidleikastig.getFjoldiOvina();
     }
 
     /**
@@ -65,25 +94,18 @@ public class Leikbord extends Pane {
         }
         setFocusTraversable(true);
         requestFocus();
-        setErfidleikiController();
     }
 
-    /**
-     * Setur inn fjölda óvina
-     *
-     * @param fjoldiOvina fjöldi óvina á borði
-     */
-    public void setFjoldiOvina(int fjoldiOvina) {
-        erfidleikiController.setFjoldiOvina(fjoldiOvina);
+    private double randomX(double width) {
+        double minX = 0;
+        double maxX = getWidth() - width;
+        return Math.random() * (maxX - minX) + minX;
     }
 
-    /**
-     * Skilar fjölda óvina eftir því hvaða erfiðleikastig er valið
-     *
-     * @return fjöldi óvina
-     */
-    public int getFjoldiOvina() {
-        return erfidleikiController.getFjoldiOvina();
+    private double randomY(double height) {
+        double minY = menustyring != null ? menustyring.getHeight() : 0;
+        double maxY = getHeight() - height;
+        return Math.random() * (maxY - minY) + minY;
     }
 
     /**
@@ -93,21 +115,21 @@ public class Leikbord extends Pane {
         Duration ovinurInterval = Duration.seconds(1);
         ovinurDropper = new Timeline(new KeyFrame(ovinurInterval, event -> dropOvinur()));
         ovinurDropper.play();
-        gameLoop = new AnimationTimer() {
+        ovinurLoop = new AnimationTimer() {
             @Override
             public void handle(long l) {
                 ovinurDrepur();
                 updateGrafariPosition();
             }
         };
-        gameLoop.start();
+        ovinurLoop.start();
 
         setOnKeyPressed(this::handleKeyPress);
         setOnKeyReleased(this::handleKeyRelease);
     }
 
     /**
-     * Passar að óvinur heldur ekki áfram að myndast á leikborði
+     * Passar að óvinir halda ekki áfram að birtast á leikborði
      */
     public void stopOvinur() {
         if (ovinurDropper != null) {
@@ -119,7 +141,7 @@ public class Leikbord extends Pane {
     }
 
     /**
-     * Staðsetur óvin á leikborði
+     * Setur óvin á leikborði
      */
     private void dropOvinur() {
         for (int i = 0; i < getFjoldiOvina(); i++) {
@@ -127,17 +149,8 @@ public class Leikbord extends Pane {
             ovinur.add(ovinur1);
             getChildren().add(ovinur1);
 
-            double minX = 0;
-            double maxX = getWidth() - ovinur1.getWidth();
-
-            double minY = menustyring != null ? menustyring.getHeight() : 0;
-            double maxY = getHeight() - ovinur1.getHeight();
-
-            double initialX = Math.random() * (maxX - minX) + minX;
-            double initialY = Math.random() * (maxY - minY) + minY;
-
-            ovinur1.setLayoutX(initialX);
-            ovinur1.setLayoutY(initialY);
+            ovinur1.setLayoutX(randomX(ovinur1.getWidth()));
+            ovinur1.setLayoutY(randomY(ovinur1.getHeight()));
         }
     }
 
@@ -149,9 +162,10 @@ public class Leikbord extends Pane {
             if (o.isCollidingWithGrafari(grafari)) {
                 goldController.leikLokid(VARST_DREPINN);
                 System.out.println("Óvinur drap þig");
-                stopOvinur();
-                gameLoop.stop();
-                gameLoop = null;
+                if (ovinurLoop != null) {
+                    ovinurLoop.stop();
+                    ovinurLoop = null;
+                }
 
                 setOnKeyPressed(null);
                 setOnKeyReleased(null);
@@ -168,13 +182,13 @@ public class Leikbord extends Pane {
      * Animation fyrir gullið í leikborði
      */
     public void startGullDropper() {
-        gameLoop = new AnimationTimer() {
+        gullLoop = new AnimationTimer() {
             @Override
             public void handle(long l) {
                 grafaGull();
             }
         };
-        gameLoop.start();
+        gullLoop.start();
 
         Platform.runLater(this::dropGull);
     }
@@ -183,8 +197,9 @@ public class Leikbord extends Pane {
      * Passar að aðeins eitt gull myndast í einu á leikborði
      */
     public void stopGullDropper() {
-        if (gameLoop != null) {
-            gameLoop.stop();
+        if (gullLoop != null) {
+            gullLoop.stop();
+            gullLoop = null;
         }
     }
 
@@ -196,17 +211,8 @@ public class Leikbord extends Pane {
         gulls.add(gull);
         getChildren().add(gull);
 
-        double minX = 0;
-        double maxX = getWidth() - gull.getWidth();
-
-        double minY = menustyring != null ? menustyring.getHeight() : 0;
-        double maxY = getHeight() - gull.getHeight();
-
-        double initialX = Math.random() * (maxX - minX) + minX;
-        double initialY = Math.random() * (maxY - minY) + minY;
-
-        gull.setLayoutX(initialX);
-        gull.setLayoutY(initialY);
+        gull.setLayoutX(randomX(gull.getWidth()));
+        gull.setLayoutY(randomY(gull.getHeight()));
     }
 
     /**
@@ -312,9 +318,13 @@ public class Leikbord extends Pane {
      * Stöðvar leik og hreinsar allt af leikborði
      */
     public void hreinsaBord() {
-        if (gameLoop != null) {
-            gameLoop.stop();
-            gameLoop = null;
+        if (gullLoop != null) {
+            gullLoop.stop();
+            gullLoop = null;
+        }
+        if (ovinurLoop != null) {
+            ovinurLoop.stop();
+            ovinurLoop = null;
         }
         stopGullDropper();
         stopOvinur();
@@ -342,6 +352,10 @@ public class Leikbord extends Pane {
      */
     public void hefjaAfram() {
         grafari = new Grafari();
+        if (leikur != null) {
+            setErfidleikastig(leikur.getErfidleikastig());
+        }
+        grafari.setImage(leikur != null ? leikur.getSelectedCharacter() : "Mario");
         getChildren().add(grafari);
         startGullDropper();
         startOvinur();

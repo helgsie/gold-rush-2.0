@@ -1,6 +1,5 @@
 package goldrush.vidmot.view;
 
-import goldrush.vidmot.controller.KarakterController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.image.Image;
 import javafx.scene.paint.ImagePattern;
@@ -10,8 +9,6 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class Grafari extends Rectangle {
-
-    private final KarakterController karController = KarakterController.getInstance();
 
     /**
      * Smiður til að upphafsstilla grafara
@@ -29,23 +26,20 @@ public class Grafari extends Rectangle {
 
         setLayoutX(50);
         setLayoutY(50);
-
-        setImage();
     }
 
     /**
-     * Setur mynd á grafara
+     * Setur mynd a grafara.
+     *
+     * @param selectedCharacter valinn karakter
      */
-    public void setImage(){
-        String selectedCharacter = karController.getSelectedCharacter();
+    public void setImage(String selectedCharacter){
         if (selectedCharacter != null) {
             Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/goldrush/myndir/" + selectedCharacter + ".png")));
             setFill(new ImagePattern(image));
             System.out.println(selectedCharacter + " valin!");
         } else {
             System.out.println("Enginn karakter valinn :(");
-            System.out.println(selectedCharacter + " valin!");
         }
     }
 }
-

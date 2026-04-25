@@ -38,23 +38,16 @@ public class MenuController {
         }
 
         System.out.println("Nýr Leikur");
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Byrja upp á nýtt");
-        alert.setHeaderText("Ertu viss um að þú viljir byrja upp á nýtt?");
-        alert.setContentText("Veldu OK til að hætta, eða Cancel til að halda áfram");
-        ButtonType buttonOK = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
-        alert.getButtonTypes().setAll(buttonOK, ButtonType.CANCEL);
+        ButtonType response = showConfirmation(
+                "Byrja upp á nýtt",
+                "Ertu viss um að þú viljir byrja upp á nýtt?"
+        );
 
-        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/goldrush/myndir/Icon.jpg"))));
-
-        alert.showAndWait().ifPresent(response -> {
-            if (response == buttonOK) {
-                goldController.hreinsaBord();
-                goldController.updatePoints(0);
-                ViewSwitcher.switchTo(View.ERFIDLEIKI);
-            }
-        });
+        if (response.getButtonData() == ButtonBar.ButtonData.OK_DONE) {
+            goldController.hreinsaBord();
+            goldController.updatePoints(0);
+            ViewSwitcher.switchTo(View.ERFIDLEIKI);
+        }
     }
     /**
      * Ef Loka er valið, sem er undir Skrá þá fer notandinn aftur í valmyndina start og borðið er hreinsað
@@ -65,25 +58,16 @@ public class MenuController {
             lokaGlugga.setSelected(false);
         }
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Staðfesting til að hætta leik");
-        alert.setHeaderText("Ertu viss um að þú viljir hætta?");
-        alert.setContentText("Veldu OK til að hætta, eða Cancel til að halda áfram");
+        ButtonType response = showConfirmation(
+                "Staðfesting til að hætta leik",
+                "Ertu viss um að þú viljir hætta?"
+        );
 
-        ButtonType buttonOK = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
-        alert.getButtonTypes().setAll(buttonOK, ButtonType.CANCEL);
-
-        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/goldrush/myndir/Icon.jpg"))));
-
-
-        alert.showAndWait().ifPresent(response -> {
-            if (response == buttonOK){
-                goldController.hreinsaBord();
-                goldController.updatePoints(0);
-                ViewSwitcher.switchTo(View.START);
-            }
-        });
+        if (response.getButtonData() == ButtonBar.ButtonData.OK_DONE) {
+            goldController.hreinsaBord();
+            goldController.updatePoints(0);
+            ViewSwitcher.switchTo(View.START);
+        }
     }
     /**
      * Ef Um forritið er valið, sem er undir Hjálp þá birtist upplýsinga alert sem segir notandanum
@@ -120,5 +104,25 @@ public class MenuController {
 
         System.out.println("Leikreglur display!");
         ViewSwitcher.switchTo(View.LEIKREGLUR);
+    }
+    /**
+     * Sýnir staðfestingar alert með sameiginlegu útliti.
+     * @param title titill
+     * @param header header texti
+     * @return valinn ButtonType
+     */
+    private ButtonType showConfirmation(String title, String header) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText("Veldu OK til að hætta, eða Cancel til að halda áfram");
+
+        ButtonType buttonOK = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+        alert.getButtonTypes().setAll(buttonOK, ButtonType.CANCEL);
+
+        Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/goldrush/myndir/Icon.jpg"))));
+
+        return alert.showAndWait().orElse(ButtonType.CANCEL);
     }
 }

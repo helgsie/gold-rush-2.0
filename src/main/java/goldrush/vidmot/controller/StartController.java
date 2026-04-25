@@ -2,6 +2,7 @@ package goldrush.vidmot.controller;
 
 import goldrush.app.View;
 import goldrush.app.ViewSwitcher;
+import goldrush.vinnsla.Leikur;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -19,7 +20,10 @@ public class StartController {
     @FXML
     private void onHefjaLeik(){
         System.out.println("Hefja Leik!");
+        Leikur leikur = new Leikur();
         ViewSwitcher.switchTo(View.ERFIDLEIKI);
+        ErfidleikiController erfidleikiController = (ErfidleikiController) ViewSwitcher.lookup(View.ERFIDLEIKI);
+        erfidleikiController.setLeikur(leikur);
     }
     /**
      * Ef Leikreglur er valið þá er breytt yfir í leikreglur-view.fxml og notandinn getur lesið um leikreglur

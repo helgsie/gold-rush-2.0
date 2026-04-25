@@ -1,31 +1,76 @@
 package goldrush.vidmot.controller;
 
+import goldrush.app.View;
+import goldrush.app.ViewSwitcher;
+import goldrush.vinnsla.Leikur;
 
 public class KarakterController {
-    private String selectedCharacter;
+    /**
+     * Smiður fyrir JavaFX controller.
+     */
+    public KarakterController() {
+    }
+
+    private Leikur leikur;
 
     /**
-     * Skilar hvaða karakter er valin
-     * @return valinn karakter
+     * Setur leik til ad deila milli controllera.
+     * @param leikur leikur
      */
-    public String getSelectedCharacter() {
-        return selectedCharacter;
+    public void setLeikur(Leikur leikur) {
+        this.leikur = leikur;
     }
 
     /**
-     * Setter fyrir valinn karakter
-     * @param selectedCharacter
+     * Velur Mario og fer i leikinn
      */
-    public void setSelectedCharacter(String selectedCharacter) {
-        this.selectedCharacter = selectedCharacter;
+    public void onMario() {
+        hefjaLeikMedKarakter("Mario");
     }
 
-    // Singleton pattern to ensure only one instance of CharacterController exists
-    private static final KarakterController instance = new KarakterController();
+    /**
+     * Velur Luigi og fer i leikinn
+     */
+    public void onLuigi() {
+        hefjaLeikMedKarakter("Luigi");
+    }
 
-    private KarakterController() {}
+    /**
+     * Velur Peach og fer i leikinn
+     */
+    public void onPeach() {
+        hefjaLeikMedKarakter("Peach");
+    }
 
-    public static KarakterController getInstance() {
-        return instance;
+    /**
+     * Velur Daisy og fer i leikinn
+     */
+    public void onDaisy() {
+        hefjaLeikMedKarakter("Daisy");
+    }
+
+    /**
+     * Stillir valinn karakter, opnar leikskja og byrjar leikinn.
+     *
+     * @param karakter valinn karakter
+     */
+    private void hefjaLeikMedKarakter(String karakter) {
+        if (leikur == null) {
+            leikur = new Leikur();
+        }
+
+        leikur.setSelectedCharacter(karakter);
+        ViewSwitcher.switchTo(View.LEIKBORD);
+
+        GoldController goldController = (GoldController) ViewSwitcher.lookup(View.LEIKBORD);
+        goldController.setLeikur(leikur);
+        goldController.getLeikbord().hefjaAfram();
+    }
+
+    /**
+     * Fer til baka i erfidleikaval
+     */
+    public void onTilBaka() {
+        ViewSwitcher.switchTo(View.ERFIDLEIKI);
     }
 }

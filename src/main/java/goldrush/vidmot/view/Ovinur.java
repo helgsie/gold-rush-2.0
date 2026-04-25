@@ -10,6 +10,9 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * Óvinur sem hreyfist um leikborðinu og getur drepið grafarann.
+ */
 public class Ovinur extends Rectangle {
     private final Random random;
     private final Timer timer;

@@ -22,6 +22,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Leikborð sem inniheldur grafara, gull og óvini. 
+ * Sýnir keyrslu leiks.
+ */
 public class Leikbord extends Pane {
 
     @FXML
@@ -45,6 +49,11 @@ public class Leikbord extends Pane {
     private final ObservableList<Ovinur> ovinur = FXCollections.observableArrayList();
     public static final String VARST_DREPINN = "Bowser náði þér.";
 
+    /**
+     * Setter fyrir GoldController.
+     *
+     * @param goldController controller leikborðsins
+     */
     public void setGoldController(GoldController goldController) {
         this.goldController = goldController;
     }

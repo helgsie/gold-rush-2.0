@@ -15,8 +15,17 @@ import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
 import java.util.Objects;
 
+/**
+ * Main klasi forritsins sem keyrir JavaFX leikinn Gold Rush 2.0.
+ */
 public class GoldApplication extends Application {
 
+    /**
+     * Keyrir aðalglugga forritsins, setur upp scene og sýnir upphafsskjá.
+     *
+     * @param stage aðalgluggi JavaFX forritsins
+     * @throws IOException ef ekki tekst að hlaða inn leturgerð eða CSS skrá
+     */
     @Override
     public void start(Stage stage) throws IOException {
 
@@ -49,6 +58,11 @@ public class GoldApplication extends Application {
         stage.show();
     }
 
+    /**
+     * Inngangspunktur forritsins.
+     *
+     * @param args skipanalínubreytur
+     */
     @SuppressWarnings("unused")
     public static void main(String[] args) {
         launch();

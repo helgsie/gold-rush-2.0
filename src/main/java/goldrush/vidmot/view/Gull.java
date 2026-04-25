@@ -6,6 +6,9 @@ import javafx.scene.shape.Rectangle;
 
 import java.util.Objects;
 
+/**
+ * Táknar gull sem grafari safnar á leikborðinu.
+ */
 public class Gull extends Rectangle {
 
     /**

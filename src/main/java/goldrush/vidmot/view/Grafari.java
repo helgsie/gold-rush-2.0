@@ -8,6 +8,9 @@ import javafx.scene.shape.Rectangle;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * Leikmaður á leikborðinu sem notandi stýrir með örvatökkum.
+ */
 public class Grafari extends Rectangle {
 
     /**

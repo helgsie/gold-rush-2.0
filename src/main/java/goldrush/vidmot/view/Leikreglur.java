@@ -5,6 +5,9 @@ import goldrush.app.ViewSwitcher;
 import goldrush.vidmot.controller.GoldController;
 import javafx.fxml.FXML;
 
+/**
+ * Skjár sem útskýrir hvernig leikurinn virkar.
+ */
 public class Leikreglur {
     @FXML
     private GoldController goldController;

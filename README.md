@@ -87,8 +87,8 @@ Til þess að keyra forritið án IDE eða Maven:
 
 ## Höfundar GoldRush 1.0
 
-- Ana Margarida Delgado Costa — [@anamargariida](https://github.com/anamargariida)
-- Helga Bj0rg Helgadóttir — [@helgsie](https://github.com/helgsie)
+- Ana Margarida Delgado Costa, amd16@hi.is — [@anamargariida](https://github.com/anamargariida)
+- Helga Björg Helgadóttir, hbh54@hi.is — [@helgsie](https://github.com/helgsie)
 
 ## Leyfi
 

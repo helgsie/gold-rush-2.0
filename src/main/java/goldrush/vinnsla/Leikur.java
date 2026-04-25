@@ -83,4 +83,22 @@ public class Leikur {
     public void endurstillaStig() {
         stigakerfi.resetCurrentScore();
     }
+
+    /**
+     * Baetir vid observer sem faer skilabod thegar stig breytast.
+     *
+     * @param listener listener sem a ad baeta vid
+     */
+    public void addStigaListener(StigaListener listener) {
+        stigakerfi.addListener(listener);
+    }
+
+    /**
+     * Fjarlaegir observer ur lista yfir stigabreytingar.
+     *
+     * @param listener listener sem a ad fjarlaegja
+     */
+    public void removeStigaListener(StigaListener listener) {
+        stigakerfi.removeListener(listener);
+    }
 }

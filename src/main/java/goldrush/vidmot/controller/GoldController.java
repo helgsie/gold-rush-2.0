@@ -6,6 +6,7 @@ import goldrush.vidmot.dialog.AdvorunDialog;
 import goldrush.vidmot.view.Leikbord;
 import goldrush.vinnsla.Klukka;
 import goldrush.vinnsla.Leikur;
+import goldrush.vinnsla.StigaListener;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -20,7 +21,7 @@ import javafx.util.Duration;
 import java.util.Objects;
 import java.util.Optional;
 
-public class GoldController {
+public class GoldController implements StigaListener {
     public MenuBar menustyring;
     @FXML
     private MenuController menustyringController;
@@ -40,6 +41,7 @@ public class GoldController {
     public GoldController() {
         this.leikbord = new Leikbord();
         this.leikur = new Leikur();
+        this.leikur.addStigaListener(this);
     }
 
     /**
@@ -48,8 +50,14 @@ public class GoldController {
      * @param leikur leikur
      */
     public void setLeikur(Leikur leikur) {
+        if (this.leikur != null) {
+            this.leikur.removeStigaListener(this);
+        }
+
         this.leikur = leikur;
+        this.leikur.addStigaListener(this);
         leikbord.setLeikur(leikur);
+        fxStig.setText(String.valueOf(leikur.getStigin()));
     }
 
     /**
@@ -62,6 +70,7 @@ public class GoldController {
         leikbord.setGoldController(this);
         leikbord.setLeikur(leikur);
         klukka = new Klukka();
+        fxStig.setText(String.valueOf(leikur.getStigin()));
     }
 
     /**
@@ -97,8 +106,17 @@ public class GoldController {
         } else {
             leikur.baetaVidStigum(points);
         }
+    }
 
-        fxStig.setText(String.valueOf(leikur.getStigin()));
+    /**
+     * Uppfaerir stigatexta thegar Stigakerfi tilkynnir um breytingu.
+     *
+     * @param stig nuverandi stig
+     * @param haestuStig haestu stig
+     */
+    @Override
+    public void stigBreytt(int stig, int haestuStig) {
+        Platform.runLater(() -> fxStig.setText(String.valueOf(stig)));
     }
 
     /**

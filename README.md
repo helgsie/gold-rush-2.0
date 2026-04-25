@@ -42,7 +42,7 @@ Sjá nánar í [`pom.xml`](pom.xml).
 | --- | --- |
 | `mvn compile` | Þýðir verkefnið |
 | `mvn test` | Keyrir JUnit prófin |
-| `mvn exec:java` | Keyrir forritið í gegnum `vidmot.goldrush.Launcher` |
+| `mvn exec:java` | Keyrir forritið í gegnum `goldrush.Launcher` |
 | `mvn package` | Pakkar forritinu í eina fat jar skrá með `maven-shade-plugin` |
 | `mvn site` | Býr til Maven site með Javadoc og hönnunarskjölum |
 | `mvn javafx:run` | Keyrir leikinn beint í gegnum JavaFX plugin |
@@ -53,7 +53,7 @@ Til þess að keyra forritið með Maven þá fer einstaklingur í **Maven → P
 
 Annars er hægt að keyra það í gegnum `GoldApplication` og ýta á _run current file_.
 
-> `vidmot.goldrush.GoldApplication` er mainClass fyrir JavaFX og `vidmot.goldrush.Launcher` er mainClass fyrir fat jar.
+> `vidmot.goldrush.GoldApplication` er mainClass fyrir JavaFX og `goldrush.Launcher` er mainClass fyrir fat jar.
 
 ## Pökkun og keyrsla á jar skrá
 

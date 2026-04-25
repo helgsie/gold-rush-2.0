@@ -41,10 +41,10 @@ Sjá nánar í [`pom.xml`](pom.xml).
 | goals | Lýsing |
 | --- | --- |
 | `mvn compile` | Þýðir verkefnið |
-| `mvn test` | Keyrir JUnit prófin (Surefire) |
+| `mvn test` | Keyrir JUnit prófin |
 | `mvn exec:java` | Keyrir forritið í gegnum `vidmot.goldrush.Launcher` |
 | `mvn package` | Pakkar forritinu í eina fat jar skrá með `maven-shade-plugin` |
-| `mvn site` | Býr til verkefnasíðu með Javadoc og hönnunarskjölum |
+| `mvn site` | Býr til Maven site með Javadoc og hönnunarskjölum |
 | `mvn javafx:run` | Keyrir leikinn beint í gegnum JavaFX plugin |
 
 ## Keyrsla í IDE

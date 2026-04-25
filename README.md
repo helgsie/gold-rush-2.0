@@ -60,10 +60,8 @@ Annars er hægt að keyra það í gegnum `GoldApplication` og ýta á _run curr
 Til þess að pakka forritinu í eina keyranlega `.jar` skrá:
 
 ```bash
-./package.sh
+mvn package
 ```
-
-Þetta keyrir `mvn clean package` og býr til fat jar í `target/` möppunni.
 
 Til þess að keyra forritið án IDE eða Maven:
 
@@ -81,7 +79,7 @@ Til þess að keyra forritið án IDE eða Maven:
 
 ## Hönnunarskjöl
 
-- [UML klasamynd](docs/class-diagram.md) !!NOTE VANTAR!!
+- [UML klasamynd](docs/uml.md)
 - [Hönnunarmynstur (design patterns)](docs/design-patterns.md) !!NOTE VANTAR!!
 - [Javadoc](docs/javadoc/index.html) _(útbúið með `mvn site`)_
 
@@ -92,4 +90,4 @@ Til þess að keyra forritið án IDE eða Maven:
 
 ## Leyfi
 
-Þetta verkefni er gefið út undir [MIT leyfi](LICENSE). VANTAR MIT LICENSE
+Þetta verkefni er gefið út undir [MIT leyfi](LICENSE).

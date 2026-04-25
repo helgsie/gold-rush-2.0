@@ -1,4 +1,4 @@
-package vidmot.goldrush;
+package goldrush;
 
 import goldrush.GoldApplication;
 

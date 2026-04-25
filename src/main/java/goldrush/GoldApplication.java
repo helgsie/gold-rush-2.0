@@ -58,12 +58,6 @@ public class GoldApplication extends Application {
         stage.show();
     }
 
-    /**
-     * Inngangspunktur forritsins.
-     *
-     * @param args skipanalínubreytur
-     */
-    @SuppressWarnings("unused")
     public static void main(String[] args) {
         launch();
     }

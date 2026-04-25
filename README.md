@@ -75,12 +75,11 @@ Til þess að keyra forritið án IDE eða Maven:
 
 | Leikreglur | Velja karakter | Leikur |
 | :---: | :---: | :---: |
-| ![Leikreglur](src/main/resources/vidmot/goldrush/myndir/leikreglur.png) | ![Velja karakter](src/main/resources/vidmot/goldrush/myndir/karakter_select.png) | ![Leikur](src/main/resources/vidmot/goldrush/myndir/leikur.png) |
+| ![Leikreglur](src/main/resources/goldrush/myndir/leikreglur.png) | ![Velja karakter](src/main/resources/goldrush/myndir/karakter_select.png) | ![Leikur](src/main/resources/goldrush/myndir/leikur.png) |
 
 ## Hönnunarskjöl
-
-- [UML klasamynd](docs/uml.md)
-- [Hönnunarmynstur (design patterns)](docs/design-patterns.md) !!NOTE VANTAR!!
+- [UML Class Diagram](docs/uml.md)
+- [Design patterns](link) !!NOTE VANTAR!!
 - [Javadoc](docs/javadoc/index.html) _(útbúið með `mvn site`)_
 
 ## Höfundar GoldRush 1.0

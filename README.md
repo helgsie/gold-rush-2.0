@@ -60,10 +60,8 @@ Annars er hægt að keyra það í gegnum `GoldApplication` og ýta á _run curr
 Til þess að pakka forritinu í eina keyranlega `.jar` skrá:
 
 ```bash
-./package.sh
+mvn package
 ```
-
-Þetta keyrir `mvn clean package` og býr til fat jar í `target/` möppunni.
 
 Til þess að keyra forritið án IDE eða Maven:
 
@@ -77,12 +75,11 @@ Til þess að keyra forritið án IDE eða Maven:
 
 | Leikreglur | Velja karakter | Leikur |
 | :---: | :---: | :---: |
-| ![Leikreglur](src/main/resources/vidmot/goldrush/myndir/leikreglur.png) | ![Velja karakter](src/main/resources/vidmot/goldrush/myndir/karakter_select.png) | ![Leikur](src/main/resources/vidmot/goldrush/myndir/leikur.png) |
+| ![Leikreglur](src/main/resources/goldrush/myndir/leikreglur.png) | ![Velja karakter](src/main/resources/goldrush/myndir/karakter_select.png) | ![Leikur](src/main/resources/goldrush/myndir/leikur.png) |
 
 ## Hönnunarskjöl
-
-- [UML Class diagram](docs/class-diagram.md) !!NOTE VANTAR!!
-- [Design patterns](docs/design-patterns.md) !!NOTE VANTAR!!
+- [UML Class Diagram](docs/uml.md)
+- [Design patterns](link) !!NOTE VANTAR!!
 - [Javadoc](docs/javadoc/index.html) _(útbúið með `mvn site`)_
 
 ## Höfundar GoldRush 1.0
@@ -92,4 +89,4 @@ Til þess að keyra forritið án IDE eða Maven:
 
 ## Leyfi
 
-Þetta verkefni er gefið út undir [MIT leyfi](LICENSE). VANTAR MIT LICENSE
+Þetta verkefni er gefið út undir [MIT leyfi](LICENSE).

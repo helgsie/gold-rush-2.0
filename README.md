@@ -1,38 +1,95 @@
-HæHæ breyting breyting
+# GoldRush 2.0
 
-# Version 1.0
+> Endurbætt útgáfa af GoldRush — JavaFX leikur fyrir HBV202G.
 
-Verkefnið er endurbætt útgáfa af GoldRush. Sá leikur var uppáhalds verkefnið hjá öllum þar sem hann gefur marga 
-möguleika á að bæta við auka virkni sem gerir leikinn skemmtilegri og fjölbreytnari, og voru því allir sammála 
-hvaða verkefni yrði valið.
+## Version 1.0
 
-Þetta verkefnið var frábrugðið hinum verkefnunum þar sem það var tölvuleikur og meira gagnvirkt en hin verkefnin. 
-Við höfum allar mismunandi reynslur af tölvuleikjum og því viljum við prófa að útfæra leik á okkar hátt. 
-Við vorum komnar með góðan grunn til að vinna með og því skemmtilegra að hugsa um hvernig við getum bætt 
-við leikinn til að gera upplifunina fyrir notandann enn skemmtilegri. Viðmótið sjálft var með mestu möguleikana
-til að betrumbæta leikinn.
+Verkefnið er endurbætt útgáfa af GoldRush. Sá leikur var uppáhalds verkefnið hjá öllum þar sem hann gefur marga möguleika á að bæta við auka virkni sem gerir leikinn skemmtilegri og fjölbreytnari, og voru því allir sammála hvaða verkefni yrði valið.
+
+Þetta verkefnið var frábrugðið hinum verkefnunum þar sem það var tölvuleikur og meira gagnvirkt en hin verkefnin. Við höfum allar mismunandi reynslur af tölvuleikjum og því viljum við prófa að útfæra leik á okkar hátt. Við vorum komnar með góðan grunn til að vinna með og því skemmtilegra að hugsa um hvernig við getum bætt við leikinn til að gera upplifunina fyrir notandann enn skemmtilegri. Viðmótið sjálft var með mestu möguleikana til að betrumbæta leikinn.
 
 **Allar grunnkröfurnar eru þær sömu en þó nokkrar viðbætur:**
+
 - Hægt er að velja mismunandi persónur sem uppfylla hlutverk grafarans.
 - Hægt er að velja erfiðleikastig sem hefur áhrif á hversu margir óvinir birtast.
 - Óvinur sem endar leikinn ef grafarinn rekst á hann.
 - Breytt var leikjatímanum þar sem hann telur ekki lengur niður heldur telur áfram þangað til þú rekst á óvininn eða hættir í leik.
-  
-## **Maven uppsetning**
-   ### Maven Compiler Plugin:
-  Við notuðum Maven source 21, version 3.11.0. (Group ID: org.apache.maven.plugins)
-  ### JavaFX Maven Plugin:
-  Við notuðum version 0.0.8. (Group ID: org.openjfx) <br>
-  [Sjá nánar í pom.xml](https://github.com/sigrunedda/GoldRush/blob/main/pom.xml)
-  
-## **Til þess að keyra forritið:** <br>
-  Til þess að keyra forritið með Maven þá fer einstaklingur í Maven -> Plugins -> javafx -> javafx:run
-  <br> annars er hægt að keyra það í gegnum GoldApplication og ýta á run current file. 
-  <br> _GoldApplication er mainClass_
 
-## **Leikurinn í keyrslu:**
-<div style="display:grid;grid-template-columns:1 1 1;">
-  <img src="src/main/resources/vidmot/goldrush/myndir/leikreglur.png" alt="Leikreglur" width="300"/>
-  <img src="src/main/resources/vidmot/goldrush/myndir/karakter_select.png" alt="Velja karakter" width="300"/>
-  <img src="src/main/resources/vidmot/goldrush/myndir/leikur.png" alt="Leikur" width="300"/>
-</div>
+## Maven uppsetning
+
+Verkefnið notar:
+
+- **Java** 21
+- **JavaFX** 21 (`javafx-controls`, `javafx-fxml`)
+- **JUnit Jupiter** 5.10.0
+
+### Plugins
+
+| Plugin | Version | Group ID |
+| --- | --- | --- |
+| `maven-compiler-plugin` | 3.13.0 | `org.apache.maven.plugins` |
+| `maven-surefire-plugin` | 3.3.0 | `org.apache.maven.plugins` |
+| `maven-site-plugin` | 3.12.1 | `org.apache.maven.plugins` |
+| `javafx-maven-plugin` | 0.0.8 | `org.openjfx` |
+| `maven-shade-plugin` | 3.5.2 | `org.apache.maven.plugins` |
+| `exec-maven-plugin` | 3.3.0 | `org.codehaus.mojo` |
+
+Sjá nánar í [`pom.xml`](pom.xml).
+
+## Maven goals sem eru studd
+
+| goals | Lýsing |
+| --- | --- |
+| `mvn compile` | Þýðir verkefnið |
+| `mvn test` | Keyrir JUnit prófin (Surefire) |
+| `mvn exec:java` | Keyrir forritið í gegnum `vidmot.goldrush.Launcher` |
+| `mvn package` | Pakkar forritinu í eina fat jar skrá með `maven-shade-plugin` |
+| `mvn site` | Býr til verkefnasíðu með Javadoc og hönnunarskjölum |
+| `mvn javafx:run` | Keyrir leikinn beint í gegnum JavaFX plugin |
+
+## Keyrsla í IDE
+
+Til þess að keyra forritið með Maven þá fer einstaklingur í **Maven → Plugins → javafx → javafx:run**.
+
+Annars er hægt að keyra það í gegnum `GoldApplication` og ýta á _run current file_.
+
+> `vidmot.goldrush.GoldApplication` er mainClass fyrir JavaFX og `vidmot.goldrush.Launcher` er mainClass fyrir fat jar.
+
+## Pökkun og keyrsla á jar skrá
+
+Til þess að pakka forritinu í eina keyranlega `.jar` skrá:
+
+```bash
+./package.sh
+```
+
+Þetta keyrir `mvn clean package` og býr til fat jar í `target/` möppunni.
+
+Til þess að keyra forritið án IDE eða Maven:
+
+```bash
+./run.sh
+```
+
+Þetta keyrir `java -jar target/GoldRush-1.0-SNAPSHOT.jar` (Launcher klasinn er entry point).
+
+## Leikurinn í keyrslu
+
+| Leikreglur | Velja karakter | Leikur |
+| :---: | :---: | :---: |
+| ![Leikreglur](src/main/resources/vidmot/goldrush/myndir/leikreglur.png) | ![Velja karakter](src/main/resources/vidmot/goldrush/myndir/karakter_select.png) | ![Leikur](src/main/resources/vidmot/goldrush/myndir/leikur.png) |
+
+## Hönnunarskjöl
+
+- [UML klasamynd](docs/class-diagram.md) !!NOTE VANTAR!!
+- [Hönnunarmynstur (design patterns)](docs/design-patterns.md) !!NOTE VANTAR!!
+- [Javadoc](docs/javadoc/index.html) _(útbúið með `mvn site`)_
+
+## Höfundar GoldRush 1.0
+
+- Ana Margarida Delgado Costa — [@anamargariida](https://github.com/anamargariida)
+- Helga Bj0rg Helgadóttir — [@helgsie](https://github.com/helgsie)
+
+## Leyfi
+
+Þetta verkefni er gefið út undir [MIT leyfi](LICENSE). VANTAR MIT LICENSE

@@ -4,6 +4,9 @@ import goldrush.app.View;
 import goldrush.app.ViewSwitcher;
 import goldrush.vinnsla.Leikur;
 
+/**
+ * Controller fyrir skjáinn sem sýnir karakterval.
+ */
 public class KarakterController {
     /**
      * Smiður fyrir JavaFX controller.

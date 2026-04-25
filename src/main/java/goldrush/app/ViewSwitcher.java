@@ -10,6 +10,9 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Sér um að skipta á milli mismunandi skjáa (views) í forritinu.
+ */
 public class ViewSwitcher {
 
     private static final Map<View, Parent> cache = new HashMap<>();
@@ -19,6 +22,11 @@ public class ViewSwitcher {
     private static View currentView;
     private static final Logger LOGGER = Logger.getLogger(ViewSwitcher.class.getName());
 
+    /**
+     * Setur scene sem birtir svo views.
+     *
+     * @param scene JavaFX scene sem á að nota
+     */
     public static void setScene(Scene scene){
         ViewSwitcher.scene = scene;
     }
@@ -54,7 +62,10 @@ public class ViewSwitcher {
     }
 
     /**
-     * Flettir upp hvaða fxml skrá notandinn er á
+     * Skilar controller sem tengist tilteknu view.
+     *
+     * @param v view sem á að fletta upp
+     * @return controller fyrir view-ið, eða null ef það hefur ekki verið hlaðið
      */
     public static Object lookup(View v) {
         return controllers.get(v);

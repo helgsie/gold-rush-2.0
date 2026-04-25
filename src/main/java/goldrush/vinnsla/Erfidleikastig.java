@@ -4,8 +4,11 @@ package goldrush.vinnsla;
  * Moguleg erfidleikastig i leiknum.
  */
 public enum Erfidleikastig {
+    /** Auðvelt stig - einn óvinur. */
     AUDVELT(1),
+    /** Miðlungs stig - tveir óvinar. */
     MIDLUNGS(2),
+    /** Erfitt stig - þrír óvinar. */
     ERFITT(3);
 
     private final int fjoldiOvina;

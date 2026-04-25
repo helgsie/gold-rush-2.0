@@ -5,6 +5,9 @@ import goldrush.app.ViewSwitcher;
 import goldrush.vinnsla.Erfidleikastig;
 import goldrush.vinnsla.Leikur;
 
+/**
+ * Controller fyrir skjáinn sem sýnir erfiðleikaval.
+ */
 public class ErfidleikiController {
 
     private Leikur leikur;
@@ -26,6 +29,11 @@ public class ErfidleikiController {
         }
     }
 
+    /**
+     * Stillir erfiðleikastig leiks.
+     *
+     * @param erfidleikastig valið erfiðleikastig
+     */
     public void setErfidleikastig(Erfidleikastig erfidleikastig) {
         if (leikur != null) {
             leikur.setErfidleikastig(erfidleikastig);

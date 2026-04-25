@@ -80,6 +80,9 @@ public class Leikur {
         return stigakerfi.getHighScore();
     }
 
+    /**
+     * Endurstillir núverandi stigafjölda.
+     */
     public void endurstillaStig() {
         stigakerfi.resetCurrentScore();
     }

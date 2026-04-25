@@ -1,23 +1,16 @@
 # GoldRush 2.0
 
-> Endurbætt útgáfa af GoldRush — JavaFX leikur fyrir HBV202G.
+> An improved version of GoldRush, a JavaFX game for HBV202G.
 
-## Version 1.0
+## Version 2.0
+A JavaFX game built on GoldRush where the player collects gold while avoiding enemies.
+We decided to add onto this project as it gave us the most room to improve gameplay and user experience. 
+The game features character selection, difficulty levels and a timer. 
+The project applies software design concepts from HBV202G including Maven, JUnit testing, UML design and design patterns.
 
-Verkefnið er endurbætt útgáfa af GoldRush. Sá leikur var uppáhalds verkefnið hjá öllum þar sem hann gefur marga möguleika á að bæta við auka virkni sem gerir leikinn skemmtilegri og fjölbreytnari, og voru því allir sammála hvaða verkefni yrði valið.
+## Maven Setup
 
-Þetta verkefnið var frábrugðið hinum verkefnunum þar sem það var tölvuleikur og meira gagnvirkt en hin verkefnin. Við höfum allar mismunandi reynslur af tölvuleikjum og því viljum við prófa að útfæra leik á okkar hátt. Við vorum komnar með góðan grunn til að vinna með og því skemmtilegra að hugsa um hvernig við getum bætt við leikinn til að gera upplifunina fyrir notandann enn skemmtilegri. Viðmótið sjálft var með mestu möguleikana til að betrumbæta leikinn.
-
-**Allar grunnkröfurnar eru þær sömu en þó nokkrar viðbætur:**
-
-- Hægt er að velja mismunandi persónur sem uppfylla hlutverk grafarans.
-- Hægt er að velja erfiðleikastig sem hefur áhrif á hversu margir óvinir birtast.
-- Óvinur sem endar leikinn ef grafarinn rekst á hann.
-- Breytt var leikjatímanum þar sem hann telur ekki lengur niður heldur telur áfram þangað til þú rekst á óvininn eða hættir í leik.
-
-## Maven uppsetning
-
-Verkefnið notar:
+The project uses:
 
 - **Java** 21
 - **JavaFX** 21 (`javafx-controls`, `javafx-fxml`)
@@ -34,59 +27,60 @@ Verkefnið notar:
 | `maven-shade-plugin` | 3.5.2 | `org.apache.maven.plugins` |
 | `exec-maven-plugin` | 3.3.0 | `org.codehaus.mojo` |
 
-Sjá nánar í [`pom.xml`](pom.xml).
+See more in [`pom.xml`](pom.xml).
 
-## Maven goals sem eru studd
+## Supported Maven goals
 
-| goals | Lýsing |
+| Goal | Description |
 | --- | --- |
-| `mvn compile` | Þýðir verkefnið |
-| `mvn test` | Keyrir JUnit prófin |
-| `mvn exec:java` | Keyrir forritið í gegnum `goldrush.Launcher` |
-| `mvn package` | Pakkar forritinu í eina fat jar skrá með `maven-shade-plugin` |
-| `mvn site` | Býr til Maven site með Javadoc og hönnunarskjölum |
-| `mvn javafx:run` | Keyrir leikinn beint í gegnum JavaFX plugin |
+| `mvn compile` | Compiles the project |
+| `mvn test` | Runs the JUnit tests |
+| `mvn exec:java` | Runs the program through `vidmot.goldrush.Launcher` |
+| `mvn package` | Packages the program into a single fat jar using `maven-shade-plugin` |
+| `mvn site` | Generates the Maven site with Javadoc and design documentation |
+| `mvn javafx:run` | Runs the game directly through the JavaFX plugin |
 
-## Keyrsla í IDE
+## Running in an IDE
 
-Til þess að keyra forritið með Maven þá fer einstaklingur í **Maven → Plugins → javafx → javafx:run**.
+To run the program with Maven, go to **Maven → Plugins → javafx → javafx:run**.
 
-Annars er hægt að keyra það í gegnum `GoldApplication` og ýta á _run current file_.
+Alternatively, you can run it through `GoldApplication` and click _run current file_.
 
-> `vidmot.goldrush.GoldApplication` er mainClass fyrir JavaFX og `goldrush.Launcher` er mainClass fyrir fat jar.
+> `vidmot.goldrush.GoldApplication` is the mainClass for JavaFX, and `vidmot.goldrush.Launcher` is the mainClass for the fat jar.
 
-## Pökkun og keyrsla á jar skrá
+## Packaging and Running the jar file
 
-Til þess að pakka forritinu í eina keyranlega `.jar` skrá:
+To package the program into a single executable `.jar` file:
 
 ```bash
 mvn package
 ```
 
-Til þess að keyra forritið án IDE eða Maven:
+To run the program without an IDE or Maven:
 
 ```bash
 ./run.sh
 ```
 
-Þetta keyrir `java -jar target/GoldRush-1.0-SNAPSHOT.jar` (Launcher klasinn er entry point).
+This runs `java -jar target/GoldRush-1.0-SNAPSHOT.jar` (the `Launcher` class is the entry point).
 
-## Leikurinn í keyrslu
+## Game in Action
 
-| Leikreglur | Velja karakter | Leikur |
+| Game rules | Character select | Gameplay |
 | :---: | :---: | :---: |
-| ![Leikreglur](src/main/resources/goldrush/myndir/leikreglur.png) | ![Velja karakter](src/main/resources/goldrush/myndir/karakter_select.png) | ![Leikur](src/main/resources/goldrush/myndir/leikur.png) |
+| ![Game rules](src/main/resources/goldrush/myndir/leikreglur.png) | ![Character select](src/main/resources/goldrush/myndir/karakter_select.png) | ![Gameplay](src/main/resources/goldrush/myndir/leikur.png) |
 
-## Hönnunarskjöl
-- [UML Class Diagram](docs/uml.md)
-- [Design patterns](link) !!NOTE VANTAR!!
-- [Javadoc](docs/javadoc/index.html) _(útbúið með `mvn site`)_
+## Design Documentation
+- [UML Class Diagram](src/site/markdown/uml.md)
+- [Design Patterns](src/site/markdown/design-patterns.md)
 
-## Höfundar GoldRush 1.0
+## API Reference
+Javadoc is generated with `mvn site` and can be found at `target/site/apidocs/index.html`.
 
+## Authors
 - Ana Margarida Delgado Costa, amd16@hi.is — [@anamargariida](https://github.com/anamargariida)
 - Helga Björg Helgadóttir, hbh54@hi.is — [@helgsie](https://github.com/helgsie)
 
-## Leyfi
+## License
 
-Þetta verkefni er gefið út undir [MIT leyfi](LICENSE).
+This project is released under the [MIT License](LICENSE).

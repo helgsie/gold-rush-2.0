@@ -81,8 +81,8 @@ Til þess að keyra forritið án IDE eða Maven:
 
 ## Hönnunarskjöl
 
-- [UML klasamynd](docs/class-diagram.md) !!NOTE VANTAR!!
-- [Hönnunarmynstur (design patterns)](docs/design-patterns.md) !!NOTE VANTAR!!
+- [UML Class diagram](docs/class-diagram.md) !!NOTE VANTAR!!
+- [Design patterns](docs/design-patterns.md) !!NOTE VANTAR!!
 - [Javadoc](docs/javadoc/index.html) _(útbúið með `mvn site`)_
 
 ## Höfundar GoldRush 1.0
